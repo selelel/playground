@@ -5,6 +5,6 @@
 ////////////
 export interface RootState {
   lcl_db: {
-    data: string;
+    data: [];
   };
 }

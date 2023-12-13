@@ -1,16 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface initialState {
+  data: data[];
+}
+
+interface data {
+  cycle_time: number;
+  description: string;
+  price: number;
+  service_name: string;
+  vehicle_size: string;
+}
+
 const localDB = createSlice({
   name: "local_database",
+
   initialState: {
-    data: "",
-  },
+    data: [] as data[],
+  } as initialState,
+
   reducers: {
-    addData(state, action) {
-      state.data = action.payload;
+    addData(state, actions) {
+      state.data = [...actions.payload];
     },
     deleteData(state) {
-      state.data = "";
+      console.log(state);
     },
   },
 });
