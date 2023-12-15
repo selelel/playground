@@ -3,27 +3,22 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../store/slices/import_db";
 import { RootState } from "../store";
-import Modal from "../components/Modal";
-import Table from "../components/Table";
+import Modal from "../ui/Modal";
+import Table from "../ui/Table";
 import InsertData from "../components/InsertData";
-import Button from "../components/Button";
+import Button from "../ui/Button";
 
 function Page() {
   const [isOpen, setOpen] = useState(false);
   const [refresh, setRefresh] = useState(null);
   const dispatch = useDispatch();
 
-  const { data, status, error } = useSelector(
-    (state: RootState) => state.lcl_db
-  );
+  const { data, status } = useSelector((state: RootState) => state.lcl_db);
+  //ERROR HANDLING
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dispatch(fetchData() as any);
   }, [dispatch, refresh]);
-
-  console.log(status, data);
-  !error || console.error(error);
 
   const config = [
     {

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
 import { supabase } from "../services/Supabase";
-import InputUi from "./Input";
-import Button from "./Button";
+import InputUi from "../ui/Input";
+import Button from "../ui/Button";
 
 type prop = {
   update: (selected: any[] | null) => void | undefined;
