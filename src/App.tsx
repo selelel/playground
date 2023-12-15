@@ -1,7 +1,7 @@
-import Page from "./pages/TestPage";
+import Services from "./pages/Services";
 
 function App() {
-  return <Page />;
+  return <Services />;
 }
 
 export default App;

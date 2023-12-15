@@ -13,7 +13,6 @@ function Page() {
   const [isOpen, setOpen] = useState(false);
   const [refresh, setRefresh] = useState(1);
   const { data, status } = useSelector((state: RootState) => state.lcl_db);
-
   useEffect(() => {
     dispatch(fetchData() as any);
   }, [dispatch, refresh]);
@@ -40,6 +39,7 @@ function Page() {
       render: (element: { description: string }) => element.description,
     },
   ];
+
   return (
     <div>
       {status === "succeeded" ? (

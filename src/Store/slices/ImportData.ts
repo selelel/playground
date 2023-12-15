@@ -42,5 +42,4 @@ const localDB = createSlice({
   },
 });
 
-// export const { } = localDB.actions;
 export const local_DB = localDB.reducer;
