@@ -1,39 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
-import { supabase } from "../services/Supabase";
 import InputUi from "../ui/Input";
 import Button from "../ui/Button";
+import { addData } from "../store/thunks/INSERT";
+import { useDispatch } from "react-redux";
 
-type prop = {
-  update: (selected: any[] | null) => void | undefined;
+type InsertDataProps = {
+  onUpdate: () => void;
 };
 
-type e = {
-  target: { value: string };
+type EventTargetValue = {
+  target: { value: any };
 };
 
-function InsertData({ update }: prop) {
+function FormServices({ onUpdate }: InsertDataProps) {
+  const dispatch = useDispatch();
   const [service, setService] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [size, setSize] = useState("");
-  const [cycle, setCycle] = useState("");
+  const [cycle, setCycle] = useState(0);
   const [description, setDescription] = useState("");
-  const handlerSubmit = async (e: FormEvent) => {
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { data, error, status } = await supabase
-      .from("services")
-      .insert([
-        {
-          cycle_time: cycle,
-          description: description,
-          price: price,
-          service_name: service,
-          vehicle_size: size,
-        },
-      ])
-      .select();
-    console.log(error, status);
-    update(data);
+    const newData = {
+      cycle_time: cycle,
+      description: description,
+      price: price,
+      service_name: service,
+      vehicle_size: size,
+    };
+    dispatch(addData({ newData }) as any);
+    onUpdate();
   };
 
   const listOption = [
@@ -41,7 +39,7 @@ function InsertData({ update }: prop) {
     { label: "Medium", value: "Medium" },
     { label: "Large", value: "Large" },
     { label: "XLarge", value: "XLarge" },
-    { label: "Humogous", value: "Humogous" },
+    { label: "Humongous", value: "Humongous" },
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,9 +49,9 @@ function InsertData({ update }: prop) {
 
   return (
     <div className="h-full">
-      <form onSubmit={handlerSubmit} className="flex flex-col gap-1 ">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-1">
         <InputUi
-          onChange={(e: e) => {
+          onChange={(e: EventTargetValue) => {
             setService(e.target.value);
           }}
           type="text"
@@ -68,9 +66,8 @@ function InsertData({ update }: prop) {
           onSelect={handleSelect}
           required
         />
-
         <InputUi
-          onChange={(e: e) => {
+          onChange={(e: EventTargetValue) => {
             setPrice(e.target.value);
           }}
           type="number"
@@ -78,21 +75,19 @@ function InsertData({ update }: prop) {
           required
         />
         <InputUi
-          onChange={(e: e) => {
-            setCycle(e.target.value);
+          onChange={(e: EventTargetValue) => {
+            setCycle(Number(e.target.value));
           }}
           label="Duration(minutes)"
           type="number"
         />
-
         <InputUi
-          onChange={(e: e) => {
+          onChange={(e: EventTargetValue) => {
             setDescription(e.target.value);
           }}
           type="textarea"
           label="Description"
         />
-
         <Button className="w-fit my-4 mx-auto" primary type="submit">
           Submit
         </Button>
@@ -101,4 +96,4 @@ function InsertData({ update }: prop) {
   );
 }
 
-export default InsertData;
+export default FormServices;

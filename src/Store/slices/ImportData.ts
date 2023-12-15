@@ -1,45 +1,29 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { supabase } from "../../services/Supabase";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchData } from "../thunks/GET";
 
 interface SuperbaseState {
-  data: data[];
+  data: Services[];
   error: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
 }
 
-interface data {
+export type Services = {
   cycle_time: number;
   description: string;
   price: number;
   service_name: string;
   vehicle_size: string;
-}
-
-export const fetchData = createAsyncThunk("superbase/fetchData", async () => {
-  const { data, error } = await supabase.from("services").select("*");
-  if (error) {
-    throw error;
-  }
-  return data;
-});
-
-export const initialState: SuperbaseState = {
-  data: [],
-  error: null,
-  status: "idle",
 };
 
 const localDB = createSlice({
   name: "local_database",
-  initialState,
-  reducers: {
-    addData(state, action) {
-      console.log(state.data, action);
-    },
-    deleteData(state) {
-      console.log(state);
-    },
-  },
+  initialState: {
+    data: [],
+    error: null,
+    status: "idle",
+  } as SuperbaseState,
+  reducers: {},
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
@@ -48,13 +32,15 @@ const localDB = createSlice({
       .addCase(fetchData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
+        console.info(state.status);
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message as string;
+        console.log(state.error);
       });
   },
 });
 
-export const { addData, deleteData } = localDB.actions;
+// export const { } = localDB.actions;
 export const local_DB = localDB.reducer;
