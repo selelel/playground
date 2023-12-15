@@ -1,5 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { addData, deleteData, local_DB } from "./Slices/import_db";
+import { addData, deleteData, local_DB } from "./slices/import_db";
+
+export type RootState = {
+  lcl_db: ReturnType<typeof local_DB>;
+};
 
 const store = configureStore({
   reducer: {

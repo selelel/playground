@@ -3,6 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
+    fontFamily: {},
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+  plugins: [require("tailwind-scrollbar-hide")],
 };

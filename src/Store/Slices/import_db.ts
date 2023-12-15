@@ -1,7 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { supabase } from "../../services/Supabase";
 
-interface initialState {
+interface SuperbaseState {
   data: data[];
+  error: string | null;
+  status: "idle" | "loading" | "succeeded" | "failed";
 }
 
 interface data {
@@ -12,20 +15,44 @@ interface data {
   vehicle_size: string;
 }
 
+export const fetchData = createAsyncThunk("superbase/fetchData", async () => {
+  const { data, error } = await supabase.from("services").select("*");
+  if (error) {
+    throw error;
+  }
+  return data;
+});
+
+export const initialState: SuperbaseState = {
+  data: [],
+  error: null,
+  status: "idle",
+};
+
 const localDB = createSlice({
   name: "local_database",
-
-  initialState: {
-    data: [] as data[],
-  } as initialState,
-
+  initialState,
   reducers: {
-    addData(state, actions) {
-      state.data = [...actions.payload];
+    addData(state, action) {
+      console.log(state.data, action);
     },
     deleteData(state) {
       console.log(state);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchData.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchData.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.data = action.payload;
+      })
+      .addCase(fetchData.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message as string;
+      });
   },
 });
 

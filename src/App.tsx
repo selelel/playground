@@ -1,7 +1,7 @@
-import Display from "./Pages/Display";
+import Page from "./pages/TestPage";
 
 function App() {
-  return <Display />;
+  return <Page />;
 }
 
 export default App;
