@@ -11,11 +11,12 @@ import FormServices from "../components/FormServices";
 function Page() {
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(1);
+  const [refresh, setRefresh] = useState(true);
   const { data, status } = useSelector((state: RootState) => state.lcl_db);
+
   useEffect(() => {
     dispatch(fetchData() as any);
-  }, [dispatch, refresh]);
+  }, [dispatch, refresh, setRefresh]);
 
   const config = [
     {
@@ -45,7 +46,7 @@ function Page() {
       {status === "succeeded" ? (
         <Table data={data} config={config} />
       ) : (
-        "Loading"
+        "Loading..."
       )}
 
       <Button
@@ -75,7 +76,7 @@ function Page() {
           <p className="mb-3 text-3xl font-semibold">Services</p>
           <FormServices
             onUpdate={() => {
-              setRefresh((prevRefresh) => prevRefresh + 1);
+              setRefresh(!refresh);
               setOpen(false);
             }}
           />

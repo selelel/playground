@@ -5,6 +5,7 @@ interface SuperbaseState {
   data: Services[];
   error: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
+  insertStatus: "idle" | "loading" | "succeeded" | "failed";
 }
 
 export type Services = {
@@ -21,6 +22,7 @@ const localDB = createSlice({
     data: [],
     error: null,
     status: "idle",
+    insertStatus: "idle",
   } as SuperbaseState,
   reducers: {},
 
@@ -32,12 +34,10 @@ const localDB = createSlice({
       .addCase(fetchData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
-        console.info(state.status);
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message as string;
-        console.log(state.error);
       });
   },
 });
