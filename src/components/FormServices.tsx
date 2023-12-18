@@ -3,10 +3,10 @@ import { FormEvent, useState } from "react";
 import InputUi from "../ui/Input";
 import Button from "../ui/Button";
 import { addData } from "../store/thunks/INSERT";
-import { Services } from "../store/slices/ImportData";
+import { useDispatch } from "react-redux";
 
 type InsertDataProps = {
-  onUpdate: (e: Services | null) => void;
+  onUpdate: () => void;
 };
 
 type EventTargetValue = {
@@ -14,6 +14,7 @@ type EventTargetValue = {
 };
 
 function FormServices({ onUpdate }: InsertDataProps) {
+  const dispatch = useDispatch();
   const [service, setService] = useState("");
   const [price, setPrice] = useState(0);
   const [size, setSize] = useState("");
@@ -29,8 +30,8 @@ function FormServices({ onUpdate }: InsertDataProps) {
       service_name: service,
       vehicle_size: size,
     };
-    addData({ newData });
-    onUpdate(newData);
+    await dispatch(addData({ newData }) as any);
+    onUpdate();
   };
 
   const listOption = [

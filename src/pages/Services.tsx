@@ -11,12 +11,12 @@ import FormServices from "../components/FormServices";
 function Page() {
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(true);
+  const refresher = useSelector((state: RootState) => state.expt_db.status);
   const { data, status } = useSelector((state: RootState) => state.lcl_db);
 
   useEffect(() => {
     dispatch(fetchData() as any);
-  }, [dispatch, refresh, setRefresh]);
+  }, [dispatch, refresher]);
 
   const config = [
     {
@@ -76,7 +76,6 @@ function Page() {
           <p className="mb-3 text-3xl font-semibold">Services</p>
           <FormServices
             onUpdate={() => {
-              setRefresh(!refresh);
               setOpen(false);
             }}
           />

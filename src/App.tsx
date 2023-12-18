@@ -1,7 +1,11 @@
 import Services from "./pages/Services";
 
 function App() {
-  return <Services />;
+  return (
+    <>
+      <Services />
+    </>
+  );
 }
 
 export default App;

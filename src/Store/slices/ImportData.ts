@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchData } from "../thunks/GET";
 
-interface SuperbaseState {
+export interface SuperbaseState {
   data: Services[];
   error: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
-  insertStatus: "idle" | "loading" | "succeeded" | "failed";
 }
 
 export type Services = {
