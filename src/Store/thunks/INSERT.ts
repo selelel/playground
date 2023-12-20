@@ -9,11 +9,15 @@ type prop = {
 export const addData = createAsyncThunk(
   "superbase/addData",
   async ({ newData }: prop) => {
-    const { data, error } = await supabase.from("services").insert([newData]);
+    const { data, error } = await supabase
+      .from("services")
+      .insert([newData])
+      .select();
 
     if (error) {
       throw error.message;
     }
-    return data;
+
+    return data[0];
   }
 );

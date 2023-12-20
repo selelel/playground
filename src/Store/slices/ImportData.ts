@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchData } from "../thunks/GET";
+import { addData } from "../thunks/INSERT";
 
 export interface SuperbaseState {
   data: Services[];
@@ -38,6 +39,18 @@ const localDB = createSlice({
         state.status = "failed";
         state.error = action.error.message as string;
       });
+
+    builder.addCase(addData.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(addData.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.data.push(action.payload);
+    });
+    builder.addCase(addData.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message as string;
+    });
   },
 });
 

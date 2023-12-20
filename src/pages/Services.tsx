@@ -11,12 +11,11 @@ import FormServices from "../components/FormServices";
 function Page() {
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
-  const refresher = useSelector((state: RootState) => state.expt_db.status);
-  const { data, status } = useSelector((state: RootState) => state.lcl_db);
+  const { data, status } = useSelector((state: RootState) => state.local_DB);
 
   useEffect(() => {
     dispatch(fetchData() as any);
-  }, [dispatch, refresher]);
+  }, [dispatch]);
 
   const config = [
     {
