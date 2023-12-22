@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
+import { TfiReload } from "react-icons/tfi";
 import Modal from "../ui/Modal";
 import Table from "../ui/Table";
 import Button from "../ui/Button";
@@ -46,7 +47,7 @@ function Page() {
       {status === "succeeded" ? (
         <Table data={data} config={config} />
       ) : (
-        "Loading..."
+        <TfiReload className="animate-spin" />
       )}
 
       <Button
