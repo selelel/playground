@@ -5,7 +5,7 @@ import Customer from "./pages/Customer";
 
 function App() {
   return (
-    <div className="container ">
+    <div className="container mx-auto ">
       <Navigation />
       <Routes>
         <Route path="/" element={<Customer />} />

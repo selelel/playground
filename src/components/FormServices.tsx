@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
-import InputUi from "../ui/Input";
+import Input from "../ui/Input";
 import Button from "../ui/Button";
 import { addData } from "../store/thunks/ServicesPage/INSERT";
 import { useDispatch } from "react-redux";
@@ -50,7 +50,7 @@ function FormServices({ onUpdate }: InsertDataProps) {
   return (
     <div className="h-full">
       <form onSubmit={handleSubmit} className="flex flex-col gap-1">
-        <InputUi
+        <Input
           onChange={(e: EventTargetValue) => {
             setService(e.target.value);
           }}
@@ -58,7 +58,7 @@ function FormServices({ onUpdate }: InsertDataProps) {
           label="Service name"
           required
         />
-        <InputUi
+        <Input
           type="dropdown"
           label="Size"
           itemOption={listOption}
@@ -66,7 +66,8 @@ function FormServices({ onUpdate }: InsertDataProps) {
           onSelect={handleSelect}
           required
         />
-        <InputUi
+
+        <Input
           onChange={(e: EventTargetValue) => {
             setPrice(e.target.value);
           }}
@@ -74,14 +75,14 @@ function FormServices({ onUpdate }: InsertDataProps) {
           label="Price"
           required
         />
-        <InputUi
+        <Input
           onChange={(e: EventTargetValue) => {
             setCycle(Number(e.target.value));
           }}
           label="Duration(minutes)"
           type="number"
         />
-        <InputUi
+        <Input
           onChange={(e: EventTargetValue) => {
             setDescription(e.target.value);
           }}

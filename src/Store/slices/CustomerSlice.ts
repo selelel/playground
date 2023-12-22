@@ -15,7 +15,7 @@ const customerInfo = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchInfo.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.data = action.payload;
     });
     builder.addCase(fetchInfo.rejected, (state, action) => {

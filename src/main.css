@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  /* border: 1px blue solid; */
+}
 body {
   font-family: "Poppins", sans-serif;
 }

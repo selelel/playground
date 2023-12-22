@@ -10,7 +10,14 @@ import { RiArrowLeftSFill, RiArrowDownSFill } from "react-icons/ri";
 type InputUiProps = {
   placeholder?: string;
   label?: string;
-  type?: "text" | "email" | "password" | "number" | "textarea" | "dropdown";
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "textarea"
+    | "dropdown"
+    | "input.dropdown";
   rest?: () => void;
   className?: string;
   itemOption?:
@@ -26,7 +33,7 @@ type InputUiProps = {
   | TextareaHTMLAttributes<HTMLTextAreaElement>
 );
 
-function InputUi({
+function Input({
   label,
   type,
   placeholder,
@@ -60,16 +67,19 @@ function InputUi({
     setOpen(false);
   };
 
-  const listItem = itemOption?.map((element, index) => (
-    <div key={index}>
-      <div
-        className="hover:bg-sky-100 p-1"
-        onClick={() => handleSelect(element.label)}
-      >
-        {element.label}
-      </div>
-    </div>
-  ));
+  const listItem =
+    itemOption &&
+    itemOption?.map((element, index) => {
+      return (
+        <div
+          key={index}
+          className="hover:bg-slate-100 p-1 "
+          onClick={() => handleSelect(element.value)}
+        >
+          {element.label}
+        </div>
+      );
+    });
 
   return (
     <label className={`flex-col flex ${className}`}>
@@ -89,16 +99,38 @@ function InputUi({
             }}
           >
             {selectItem || "Select..."}
-            <div className="text-xl">
+            <div className="text-xl cursor-pointer">
               {isOpen ? <RiArrowDownSFill /> : <RiArrowLeftSFill />}
             </div>
           </div>
+
           <div className="p-1">
             {isOpen && (
               <div className="p-1" ref={divEl}>
                 {listItem}
               </div>
             )}
+          </div>
+        </>
+      ) : type === "input.dropdown" ? (
+        <>
+          <div
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <input
+              {...(rest as InputHTMLAttributes<HTMLInputElement>)}
+              className="border-2 h-10 p-2 border-black "
+              type="text"
+              placeholder={placeholder}
+            />
+          </div>
+
+          <div className="p-1">
+            <div className="p-1 absolute" ref={divEl}>
+              {isOpen && listItem}
+            </div>
           </div>
         </>
       ) : (
@@ -113,4 +145,4 @@ function InputUi({
   );
 }
 
-export default InputUi;
+export default Input;

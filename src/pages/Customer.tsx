@@ -2,62 +2,76 @@
 import { useDispatch, useSelector } from "react-redux";
 import { customer_info } from "../types/slicesTypes";
 import { TfiReload } from "react-icons/tfi";
-import { useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { fetchInfo } from "../store/thunks/CustomerPage/INSERT";
-import Table from "../ui/Table";
+import CustomerList from "../components/CustomerList";
+import Input from "../ui/Input";
 
 function Customer() {
+  const [list, setList] = useState(undefined);
+  const [selected, setSelected] = useState("");
   const dispatch = useDispatch();
   let content;
   const { data, isLoading, error } = useSelector(
     (state: customer_info) => state.customer_info
   );
-  console.log(data);
   useEffect(() => {
     dispatch(fetchInfo() as any);
   }, []);
-  const config = [
-    {
-      label: "ID",
-      render: (element: { customer_id: number }) => element.customer_id,
-    },
-    {
-      label: "Customer Name",
-      render: (element: { customer_name: string }) => element.customer_name,
-    },
-    {
-      label: "Address",
-      render: (element: { address: string }) => element.address,
-    },
-    {
-      label: "Contact Primary",
-      render: (element: { contact_primary: number }) => element.contact_primary,
-    },
-    {
-      label: "Contact Secondary",
-      render: (element: { contact_secondary: number }) =>
-        element.contact_secondary,
-    },
-    {
-      label: "Vehicle ID",
-      render: (element: { vehicle_id: number }) => element.vehicle_id,
-    },
-    {
-      label: "Loyalty Sticker",
-      render: (element: { loyalty_sticker: boolean }) =>
-        element.loyalty_sticker.toString().toUpperCase(),
-    },
-  ];
 
-  if (!isLoading) {
-    content = <TfiReload className="animate-bounce" />;
+  const submitSearch = (e: FormEvent) => {
+    e.preventDefault();
+    setSelected(selected);
+  };
+
+  const searchHandle = (e: { target: { value: any } }) => {
+    const search = data.slice().filter((element: { customer_name: any }) => {
+      return element.customer_name
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+    });
+
+    const listItems = e.target.value
+      ? search.map((list: any) => {
+          return { label: list.customer_name, value: list.customer_name };
+        })
+      : "";
+
+    setList(listItems);
+    setSelected(e.target.value);
+  };
+
+  if (isLoading) {
+    content = <TfiReload className="animate-spin" />;
   } else if (error) {
     content = <>{error}</>;
   } else {
-    content = <Table data={data} config={config} />;
+    content = <CustomerList data={data} />;
   }
 
-  return <>{content}</>;
+  return (
+    <div>
+      <div>
+        <div>
+          <form onSubmit={submitSearch}>
+            <Input
+              onChange={searchHandle}
+              className="w-48"
+              type="input.dropdown"
+              itemOption={list}
+              value={selected}
+              onSelect={(e: any) => {
+                setSelected(e);
+                console.log(e);
+              }}
+            ></Input>
+          </form>
+        </div>
+      </div>
+
+      <div>{content}</div>
+    </div>
+  );
 }
 
 export default Customer;

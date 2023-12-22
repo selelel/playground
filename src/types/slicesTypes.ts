@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { customer_info } from "../store/slices/CustomerSlice";
 import { local_DB } from "../store/slices/ServicesSlice";
 
 export interface SuperbaseState {
-  data: Services[];
+  data: any;
   error: string | null;
   isLoading: boolean;
 }

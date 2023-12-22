@@ -10,14 +10,16 @@ function Table({ data, config }: prop) {
   const header = config?.map(({ label }, index) => {
     return (
       <Fragment key={index}>
-        <td className="w-max px-3 border-black border py-1">{label}</td>
+        <td className="w-max px-3 border-black border py-1 truncate ">
+          {label}
+        </td>
       </Fragment>
     );
   });
 
   const values = data?.map((element: any, index: number) => {
     const renderRow = config.map(({ render }, colIndex) => (
-      <td className="text-left p-1 border-black border-r " key={colIndex}>
+      <td className="text-left p-2 border-black border-r" key={colIndex}>
         {render(element)}
       </td>
     ));

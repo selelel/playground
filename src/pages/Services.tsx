@@ -13,7 +13,6 @@ function Page() {
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
   const { data, isLoading } = useSelector((state: local_DB) => state.local_DB);
-  console.log("hi");
 
   useEffect(() => {
     dispatch(fetchData() as any);
