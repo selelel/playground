@@ -1,54 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchData } from "../thunks/GET";
-import { addData } from "../thunks/INSERT";
-
-export interface SuperbaseState {
-  data: Services[];
-  error: string | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
-}
-
-export type Services = {
-  cycle_time: number;
-  description: string;
-  price: number;
-  service_name: string;
-  vehicle_size: string;
-};
+import { fetchData } from "../thunks/ServicesPage/GET";
+import { addData } from "../thunks/ServicesPage/INSERT";
+import { SuperbaseState } from "../../types/slicesTypes";
 
 const localDB = createSlice({
   name: "local_database",
   initialState: {
     data: [],
     error: null,
-    status: "idle",
-    insertStatus: "idle",
+    isLoading: false,
   } as SuperbaseState,
   reducers: {},
 
   extraReducers: (builder) => {
     builder
       .addCase(fetchData.pending, (state) => {
-        state.status = "loading";
+        state.isLoading = true;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.isLoading = false;
         state.data = action.payload;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        state.status = "failed";
+        state.isLoading = false;
         state.error = action.error.message as string;
       });
 
     builder.addCase(addData.pending, (state) => {
-      state.status = "loading";
+      state.isLoading = true;
     });
     builder.addCase(addData.fulfilled, (state, action) => {
-      state.status = "succeeded";
+      state.isLoading = false;
       state.data.push(action.payload);
     });
     builder.addCase(addData.rejected, (state, action) => {
-      state.status = "failed";
+      state.isLoading = false;
       state.error = action.error.message as string;
     });
   },

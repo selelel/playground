@@ -1,16 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment } from "react";
 
-type data = {
-  service_name: string;
-  cycle_time: number;
-  description: string;
-  price: number;
-  vehicle_size: string;
-};
-
 type prop = {
-  data: data[];
-  config: { label: string; render: (element: data) => string | number }[];
+  data: any;
+  config: { label: string; render: (element: any) => string | number }[];
 };
 
 function Table({ data, config }: prop) {
@@ -22,13 +15,13 @@ function Table({ data, config }: prop) {
     );
   });
 
-  const values = data?.map((element: data) => {
+  const values = data?.map((element: any, index: number) => {
     const renderRow = config.map(({ render }, colIndex) => (
       <td className="text-left p-1 border-black border-r " key={colIndex}>
         {render(element)}
       </td>
     ));
-    return <tr key={element?.service_name}>{renderRow}</tr>;
+    return <tr key={index}>{renderRow}</tr>;
   });
 
   return (

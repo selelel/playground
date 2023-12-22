@@ -2,7 +2,7 @@
 import { FormEvent, useState } from "react";
 import InputUi from "../ui/Input";
 import Button from "../ui/Button";
-import { addData } from "../store/thunks/INSERT";
+import { addData } from "../store/thunks/ServicesPage/INSERT";
 import { useDispatch } from "react-redux";
 
 type InsertDataProps = {

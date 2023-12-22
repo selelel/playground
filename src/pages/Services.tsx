@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
 import { TfiReload } from "react-icons/tfi";
 import Modal from "../ui/Modal";
 import Table from "../ui/Table";
 import Button from "../ui/Button";
-import { fetchData } from "../store/thunks/GET";
+import { fetchData } from "../store/thunks/ServicesPage/GET";
 import FormServices from "../components/FormServices";
+import { local_DB } from "../types/slicesTypes";
 
 function Page() {
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
-  const { data, status } = useSelector((state: RootState) => state.local_DB);
+  const { data, isLoading } = useSelector((state: local_DB) => state.local_DB);
   console.log("hi");
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function Page() {
 
   return (
     <div>
-      {status === "succeeded" ? (
+      {!isLoading ? (
         <Table data={data} config={config} />
       ) : (
         <TfiReload className="animate-spin" />
