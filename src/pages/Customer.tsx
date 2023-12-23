@@ -5,7 +5,7 @@ import { TfiReload } from "react-icons/tfi";
 import { FormEvent, useEffect, useState } from "react";
 import { fetchInfo } from "../store/thunks/CustomerPage/INSERT";
 import CustomerList from "../components/CustomerList";
-import Input from "../ui/Input";
+import Search from "../ui/Search";
 
 function Customer() {
   const [searchItem, setSearchItem] = useState(undefined);
@@ -62,11 +62,9 @@ function Customer() {
       <div>
         <div>
           <form onSubmit={submitSearch}>
-            <Input
+            <Search
               onChange={searchHandle}
               className="w-48"
-              type="search"
-              label="Search for name..."
               itemOption={list}
               onSelect={(e: any) => {
                 setSelected(e);

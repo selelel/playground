@@ -6,28 +6,16 @@ import {
   useState,
 } from "react";
 import { RiArrowLeftSFill, RiArrowDownSFill } from "react-icons/ri";
-import { IoMdSearch } from "react-icons/io";
-import Button from "./Button";
 
 type InputUiProps = {
   placeholder?: string;
   label?: string;
-  type?:
-    | "text"
-    | "email"
-    | "password"
-    | "number"
-    | "textarea"
-    | "dropdown"
-    | "search";
+  type?: "text" | "email" | "password" | "number" | "textarea" | "dropdown";
   className?: string;
   itemOption?: { label: string; value: string }[];
   selectItem?: string;
   onSelect?: (selected: string) => void;
-} & (
-  | InputHTMLAttributes<HTMLInputElement>
-  | TextareaHTMLAttributes<HTMLTextAreaElement>
-);
+} & InputHTMLAttributes<HTMLInputElement>;
 
 function Input({
   label,
@@ -65,21 +53,15 @@ function Input({
 
   const renderDropdownItems = () =>
     itemOption &&
-    itemOption?.map((element, index) =>
-      type === "dropdown" ? (
-        <div key={index} onClick={() => handleSelect(element.value)}>
-          {element.label}
-        </div>
-      ) : (
-        <Button
-          key={index}
-          className="text-left font-normal"
-          onClick={() => handleSelect(element.value)}
-        >
-          {element.label}
-        </Button>
-      )
-    );
+    itemOption?.map((element, index) => (
+      <div
+        className="cursor-pointer p-1 hover:bg-sky-100  "
+        key={index}
+        onClick={() => handleSelect(element.value)}
+      >
+        {element.label}
+      </div>
+    ));
 
   const renderDropdown = () => (
     <>
@@ -99,28 +81,6 @@ function Input({
     </>
   );
 
-  const renderInputDropdown = () => (
-    <>
-      <div className="flex w-fit">
-        <div
-          className="flex items-center border-2 h-10 p-2 border-black overflow-hidden"
-          onClick={() => setOpen(true)}
-        >
-          <IoMdSearch className="text-xl" />
-          <input
-            {...(rest as InputHTMLAttributes<HTMLInputElement>)}
-            className="outline-none indent-1"
-            type="text"
-            placeholder={placeholder}
-          />
-        </div>
-      </div>
-      <div className={`${isOpen ? "block" : "hidden"}`} ref={divEl}>
-        {renderDropdownItems()}
-      </div>
-    </>
-  );
-
   return (
     <label className={`flex-col flex ${className}`}>
       {label}
@@ -132,8 +92,6 @@ function Input({
         />
       ) : type === "dropdown" ? (
         renderDropdown()
-      ) : type === "search" ? (
-        renderInputDropdown()
       ) : (
         <input
           {...(rest as InputHTMLAttributes<HTMLInputElement>)}
