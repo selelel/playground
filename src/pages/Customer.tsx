@@ -8,13 +8,15 @@ import CustomerList from "../components/CustomerList";
 import Input from "../ui/Input";
 
 function Customer() {
+  const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
   const [selected, setSelected] = useState("");
   const dispatch = useDispatch();
-  let content;
+
   const { data, isLoading, error } = useSelector(
     (state: customer_info) => state.customer_info
   );
+
   useEffect(() => {
     dispatch(fetchInfo() as any);
   }, []);
@@ -22,6 +24,12 @@ function Customer() {
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
     setSelected(selected);
+    const search = data.slice().filter((element: { customer_name: any }) => {
+      return element.customer_name
+        .toLowerCase()
+        .includes(selected.toLowerCase());
+    });
+    setSearchItem(search);
   };
 
   const searchHandle = (e: { target: { value: any } }) => {
@@ -36,18 +44,18 @@ function Customer() {
           return { label: list.customer_name, value: list.customer_name };
         })
       : "";
-
+    !e.target.value && setSearchItem(search);
     setList(listItems);
     setSelected(e.target.value);
   };
 
-  if (isLoading) {
-    content = <TfiReload className="animate-spin" />;
-  } else if (error) {
-    content = <>{error}</>;
-  } else {
-    content = <CustomerList data={data} />;
-  }
+  const content = isLoading ? (
+    <TfiReload className="animate-spin" />
+  ) : error ? (
+    <>{error}</>
+  ) : (
+    <CustomerList data={searchItem || data} />
+  );
 
   return (
     <div>
@@ -57,14 +65,14 @@ function Customer() {
             <Input
               onChange={searchHandle}
               className="w-48"
-              type="input.dropdown"
+              type="search"
+              label="Search for name..."
               itemOption={list}
-              value={selected}
               onSelect={(e: any) => {
                 setSelected(e);
-                console.log(e);
               }}
-            ></Input>
+              value={selected}
+            />
           </form>
         </div>
       </div>
