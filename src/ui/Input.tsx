@@ -65,15 +65,21 @@ function Input({
 
   const renderDropdownItems = () =>
     itemOption &&
-    itemOption?.map((element, index) => (
-      <div
-        key={index}
-        className="hover:bg-sky-100/40 p-1 cursor-pointer"
-        onClick={() => handleSelect(element.value)}
-      >
-        {element.label}
-      </div>
-    ));
+    itemOption?.map((element, index) =>
+      type === "dropdown" ? (
+        <div key={index} onClick={() => handleSelect(element.value)}>
+          {element.label}
+        </div>
+      ) : (
+        <Button
+          key={index}
+          className="text-left font-normal"
+          onClick={() => handleSelect(element.value)}
+        >
+          {element.label}
+        </Button>
+      )
+    );
 
   const renderDropdown = () => (
     <>
@@ -96,20 +102,18 @@ function Input({
   const renderInputDropdown = () => (
     <>
       <div className="flex w-fit">
-        <div className="flex items-center border-2 h-10 p-2 border-black overflow-hidden">
+        <div
+          className="flex items-center border-2 h-10 p-2 border-black overflow-hidden"
+          onClick={() => setOpen(true)}
+        >
           <IoMdSearch className="text-xl" />
           <input
             {...(rest as InputHTMLAttributes<HTMLInputElement>)}
             className="outline-none indent-1"
             type="text"
             placeholder={placeholder}
-            onClick={() => setOpen(!isOpen)}
           />
         </div>
-
-        <Button primary className="animate-none " type="submit">
-          Search
-        </Button>
       </div>
       <div className={`${isOpen ? "block" : "hidden"}`} ref={divEl}>
         {renderDropdownItems()}
