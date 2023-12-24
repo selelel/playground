@@ -49,6 +49,7 @@ function Search({ onSelect, itemOption, ...rest }: InputUiProps) {
       <div className="flex">
         <div
           className="flex items-center border-2 h-10 p-2 border-black overflow-hidden"
+          onMouseEnter={() => setOpen(true)}
           onClick={() => setOpen(true)}
         >
           <IoMdSearch className="text-xl" />

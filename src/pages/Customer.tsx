@@ -19,7 +19,7 @@ function Customer() {
 
   useEffect(() => {
     dispatch(fetchInfo() as any);
-  }, []);
+  }, [dispatch]);
 
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -32,20 +32,23 @@ function Customer() {
     setSearchItem(search);
   };
 
-  const searchHandle = (e: { target: { value: any } }) => {
-    const search = data.slice().filter((element: { customer_name: any }) => {
+  const searchHandle = (e: { target: { value: string } }) => {
+    const search = data.slice().filter((element: { customer_name: string }) => {
       return element.customer_name
         .toLowerCase()
         .includes(e.target.value.toLowerCase());
     });
 
-    const listItems = e.target.value
-      ? search.map((list: any) => {
+    const listItems = () => {
+      if (e.target.value) {
+        return search.map((list: { customer_name: string }) => {
           return { label: list.customer_name, value: list.customer_name };
-        })
-      : "";
-    !e.target.value && setSearchItem(search);
-    setList(listItems);
+        });
+      } else return "";
+    };
+
+    setSearchItem(!e.target.value ? search : undefined);
+    setList(listItems());
     setSelected(e.target.value);
   };
 
