@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { customer_info } from "../types/slicesTypes";
 import { TfiReload } from "react-icons/tfi";
 import { FormEvent, useEffect, useState } from "react";
-import { fetchInfo } from "../store/thunks/CustomerPage/INSERT";
+import { fetchInfo } from "../store/thunks/CustomerPage/GET";
 import CustomerList from "../components/CustomerList";
 import Search from "../ui/Search";
 
@@ -11,6 +11,7 @@ function Customer() {
   const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
   const [selected, setSelected] = useState("");
+
   const dispatch = useDispatch();
 
   const { data, isLoading, error } = useSelector(
@@ -40,11 +41,11 @@ function Customer() {
     });
 
     const listItems = () => {
-      if (e.target.value) {
-        return search.map((list: { customer_name: string }) => {
-          return { label: list.customer_name, value: list.customer_name };
-        });
-      } else return "";
+      if (!e.target.value) return;
+
+      return search.map((list: { customer_name: string }) => {
+        return { label: list.customer_name, value: list.customer_name };
+      });
     };
 
     setSearchItem(!e.target.value ? search : undefined);
