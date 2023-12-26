@@ -31,7 +31,7 @@ function CustomerList({ data }: any) {
     {
       label: "Loyalty Sticker",
       render: (element: { loyalty_sticker: boolean }) =>
-        element.loyalty_sticker.toString().toUpperCase(),
+        element.loyalty_sticker?.toString().toUpperCase(),
     },
   ];
   return <Table data={data} config={config} />;

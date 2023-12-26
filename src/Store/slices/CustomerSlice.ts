@@ -31,7 +31,7 @@ const customerInfo = createSlice({
     });
     builder.addCase(addUser.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.data.push(action.payload);
+      state.data = [...state.data, action.payload];
     });
     builder.addCase(addUser.rejected, (state, action) => {
       state.isLoading = false;

@@ -10,6 +10,7 @@ interface propVarie {
   children?: ReactNode;
   primary?: boolean;
   secondary?: boolean;
+  danger?: boolean;
   outline?: boolean;
   rounded?: boolean;
   onClick?: (() => void) | undefined;
@@ -22,17 +23,19 @@ const Button = ({
   secondary,
   outline,
   rounded,
+  danger,
   ...rest
 }: propVarie) => {
   const classes = classNames(
     rest.className,
-    "flex gap-2 items-center p-1 px-3 duration-75 ease-out active:scale-95 font-semibold rounded text-black active:opacity-90",
+    "flex gap-2 items-center p-1 px-3 duration-75 ease-out active:scale-95 font-semibold rounded text-black active:opacity-90 ",
 
     {
       "text-black border border-black bg-transparent": outline,
       "rounded-full": rounded,
       "text-white bg-black": primary,
       "text-black underline underline-offset-4": secondary,
+      "text-white bg-red-500": danger,
     }
   );
 

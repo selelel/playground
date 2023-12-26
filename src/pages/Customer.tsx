@@ -6,8 +6,12 @@ import { FormEvent, useEffect, useState } from "react";
 import { fetchInfo } from "../store/thunks/CustomerPage/GET";
 import CustomerList from "../components/CustomerList";
 import Search from "../ui/Search";
+import FormCustomer from "../components/FormCustomer";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
 
 function Customer() {
+  const [isOpen, setOpen] = useState(false);
   const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
   const [selected, setSelected] = useState("");
@@ -63,6 +67,41 @@ function Customer() {
 
   return (
     <div>
+      <div className="flex flex-col gap-2 justify-end">
+        <Button outline onClick={() => setOpen(true)} className="w-fit">
+          Add
+        </Button>
+        <Button outline onClick={() => console.log("Update")} className="w-fit">
+          Update
+        </Button>
+        <Button danger onClick={() => console.log("Delete")} className="w-fit">
+          Delete
+        </Button>
+      </div>
+
+      {isOpen && (
+        <Modal
+          onClose={() => {
+            setOpen(false);
+          }}
+          actionBar={
+            <Button
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              close
+            </Button>
+          }
+        >
+          <p className="mb-3 text-3xl font-semibold">Customer</p>
+          <FormCustomer
+            onUpdate={() => {
+              setOpen(false);
+            }}
+          />
+        </Modal>
+      )}
       <div>
         <div>
           <form onSubmit={submitSearch}>

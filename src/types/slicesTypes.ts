@@ -23,3 +23,13 @@ export type local_DB = {
 export type customer_info = {
   customer_info: ReturnType<typeof customer_info>;
 };
+
+export type add_info = {
+  customer_name: string | undefined;
+  address: string | undefined;
+  contact_primary: number | undefined;
+  contact_secondary: number | undefined;
+  vehicle_id: number | undefined;
+  loyalty_sticker: boolean | undefined;
+  customer_id: number | undefined;
+};
