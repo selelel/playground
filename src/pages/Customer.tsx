@@ -11,6 +11,7 @@ import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 
 function Customer() {
+  const [toDelete, setToDelete] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
@@ -62,7 +63,11 @@ function Customer() {
   ) : error ? (
     <>{error}</>
   ) : (
-    <CustomerList data={searchItem || data} />
+    <CustomerList
+      data={searchItem || data}
+      isToDelete={toDelete}
+      doneDelete={(e: boolean) => setToDelete(e)}
+    />
   );
 
   return (
@@ -74,7 +79,7 @@ function Customer() {
         <Button outline onClick={() => console.log("Update")} className="w-fit">
           Update
         </Button>
-        <Button danger onClick={() => console.log("Delete")} className="w-fit">
+        <Button danger onClick={() => setToDelete(!toDelete)} className="w-fit">
           Delete
         </Button>
       </div>

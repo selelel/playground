@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Table from "../ui/Table";
+import { MdDelete } from "react-icons/md";
+import TableCustomerList from "../ui/TableCustomerList";
+import { useDispatch } from "react-redux";
+import { removeInfo } from "../store/thunks/CustomerPage/DELETE";
 
-function CustomerList({ data }: any) {
+function CustomerList({ data, isToDelete, doneDelete }: any) {
+  const dispatch = useDispatch();
   const config = [
     {
       label: "ID",
@@ -32,9 +36,23 @@ function CustomerList({ data }: any) {
       label: "Loyalty Sticker",
       render: (element: { loyalty_sticker: boolean }) =>
         element.loyalty_sticker?.toString().toUpperCase(),
+      style: (customer_id: number) => {
+        const deleteInfo = () => {
+          dispatch(removeInfo(customer_id) as any);
+          doneDelete(false);
+        };
+        return (
+          <div onClick={deleteInfo}>
+            <MdDelete className="text-red-600 cursor-pointer" />
+          </div>
+        );
+      },
     },
   ];
-  return <Table data={data} config={config} />;
+
+  return (
+    <TableCustomerList data={data} config={config} isToDelete={isToDelete} />
+  );
 }
 
 export default CustomerList;
