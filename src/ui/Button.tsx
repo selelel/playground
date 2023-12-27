@@ -11,6 +11,7 @@ interface propVarie {
   primary?: boolean;
   secondary?: boolean;
   danger?: boolean;
+  success?: boolean;
   outline?: boolean;
   rounded?: boolean;
   onClick?: (() => void) | undefined;
@@ -24,6 +25,7 @@ const Button = ({
   outline,
   rounded,
   danger,
+  success,
   ...rest
 }: propVarie) => {
   const classes = classNames(
@@ -34,8 +36,10 @@ const Button = ({
       "text-black border border-black bg-transparent": outline,
       "rounded-full": rounded,
       "text-white bg-black": primary,
+
       "text-black underline underline-offset-4": secondary,
       "text-white bg-red-500": danger,
+      "text-white bg-green-500": success,
     }
   );
 

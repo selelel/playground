@@ -68,7 +68,7 @@ function Customer() {
   return (
     <div>
       <div className="flex flex-col gap-2 justify-end">
-        <Button outline onClick={() => setOpen(true)} className="w-fit">
+        <Button success onClick={() => setOpen(true)} className="w-fit">
           Add
         </Button>
         <Button outline onClick={() => console.log("Update")} className="w-fit">

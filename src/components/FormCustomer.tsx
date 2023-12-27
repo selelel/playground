@@ -25,8 +25,6 @@ function FormCustomer({ onUpdate }: prop) {
 
   const submitInfo = (e: FormEvent) => {
     e.preventDefault();
-    console.log(customerId.length);
-
     // Access the values using the current property of the ref objects
     onUpdate();
     const customerName = customerNameRef.current?.value;
@@ -41,7 +39,7 @@ function FormCustomer({ onUpdate }: prop) {
       contact_secondary: contactSecondary,
       vehicle_id: vehicleId,
       loyalty_sticker: loyalty,
-      customer_id: customerId.length + 1,
+      customer_id: customerId.slice().pop().customer_id + 1,
     };
     dispatch(addUser(insertInfo as add_info) as any);
   };
