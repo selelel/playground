@@ -3,8 +3,15 @@ import { MdDelete } from "react-icons/md";
 import TableCustomerList from "../ui/TableCustomerList";
 import { useDispatch } from "react-redux";
 import { removeInfo } from "../store/thunks/CustomerPage/DELETE";
+import { GoPencil } from "react-icons/go";
 
-function CustomerList({ data, isToDelete, doneDelete }: any) {
+function CustomerList({
+  data,
+  isToDelete,
+  isToUpdate,
+  doneDelete,
+  doneUpdate,
+}: any) {
   const dispatch = useDispatch();
   const config = [
     {
@@ -36,7 +43,7 @@ function CustomerList({ data, isToDelete, doneDelete }: any) {
       label: "Loyalty Sticker",
       render: (element: { loyalty_sticker: boolean }) =>
         element.loyalty_sticker?.toString().toUpperCase(),
-      style: (customer_id: number) => {
+      toDelete: (customer_id: number) => {
         const deleteInfo = () => {
           dispatch(removeInfo(customer_id) as any);
           doneDelete(false);
@@ -47,11 +54,27 @@ function CustomerList({ data, isToDelete, doneDelete }: any) {
           </div>
         );
       },
+      toUpdate: (info: any) => {
+        const updateInfo = () => {
+          doneUpdate(false);
+          console.log(info);
+        };
+        return (
+          <div className="cursor-pointer" onClick={updateInfo}>
+            <GoPencil />
+          </div>
+        );
+      },
     },
   ];
 
   return (
-    <TableCustomerList data={data} config={config} isToDelete={isToDelete} />
+    <TableCustomerList
+      data={data}
+      config={config}
+      isToDelete={isToDelete}
+      isToUpdate={isToUpdate}
+    />
   );
 }
 

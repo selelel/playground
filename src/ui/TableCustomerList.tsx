@@ -5,9 +5,10 @@ type prop = {
   data: any;
   config: { label: string; render: (element: any) => string | number }[];
   isToDelete: boolean;
+  isToUpdate: boolean;
 };
 
-function Table({ data, config, isToDelete }: prop) {
+function Table({ data, config, isToDelete, isToUpdate }: prop) {
   const header = config?.map(({ label }, index) => {
     return (
       <Fragment key={index}>
@@ -19,14 +20,17 @@ function Table({ data, config, isToDelete }: prop) {
   });
 
   const values = data?.map((element: any, index: number) => {
-    const renderRow = config.map(({ render, style }: any, colIndex) => (
-      <td className="text-left p-2 border-black border-r" key={colIndex}>
-        <div className="flex justify-between">
-          {render(element)}
-          {style && isToDelete ? style(element.customer_id) : ""}
-        </div>
-      </td>
-    ));
+    const renderRow = config.map(
+      ({ render, toDelete, toUpdate }: any, colIndex) => (
+        <td className="text-left p-2 border-black border-r" key={colIndex}>
+          <div className="flex justify-between">
+            {render(element)}
+            {toDelete && isToDelete ? toDelete(element.customer_id) : ""}
+            {toUpdate && isToUpdate ? toUpdate(element) : ""}
+          </div>
+        </td>
+      )
+    );
     return <tr key={index}>{renderRow}</tr>;
   });
 

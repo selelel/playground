@@ -12,6 +12,7 @@ import Button from "../ui/Button";
 
 function Customer() {
   const [toDelete, setToDelete] = useState(false);
+  const [toUpdate, setToUpdate] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
@@ -66,7 +67,9 @@ function Customer() {
     <CustomerList
       data={searchItem || data}
       isToDelete={toDelete}
+      isToUpdate={toUpdate}
       doneDelete={(e: boolean) => setToDelete(e)}
+      doneUpdate={(e: boolean) => setToUpdate(e)}
     />
   );
 
@@ -76,7 +79,11 @@ function Customer() {
         <Button success onClick={() => setOpen(true)} className="w-fit">
           Add
         </Button>
-        <Button outline onClick={() => console.log("Update")} className="w-fit">
+        <Button
+          outline
+          onClick={() => setToUpdate(!toUpdate)}
+          className="w-fit"
+        >
           Update
         </Button>
         <Button danger onClick={() => setToDelete(!toDelete)} className="w-fit">
