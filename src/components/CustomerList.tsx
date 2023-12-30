@@ -1,18 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MdDelete } from "react-icons/md";
 import TableCustomerList from "../ui/TableCustomerList";
-import { useDispatch } from "react-redux";
-import { removeInfo } from "../store/thunks/CustomerPage/DELETE";
-import { GoPencil } from "react-icons/go";
 
-function CustomerList({
-  data,
-  isToDelete,
-  isToUpdate,
-  doneDelete,
-  doneUpdate,
-}: any) {
-  const dispatch = useDispatch();
+function CustomerList({ data, isToDelete, isToUpdate }: any) {
   const config = [
     {
       label: "ID",
@@ -43,39 +32,16 @@ function CustomerList({
       label: "Loyalty Sticker",
       render: (element: { loyalty_sticker: boolean }) =>
         element.loyalty_sticker?.toString().toUpperCase(),
-      toDelete: (customer_id: number) => {
-        const deleteInfo = () => {
-          dispatch(removeInfo(customer_id) as any);
-          doneDelete(false);
-        };
-        return (
-          <div onClick={deleteInfo}>
-            <MdDelete className="text-red-600 cursor-pointer" />
-          </div>
-        );
+      toDelete: () => {
+        console.log(isToDelete);
       },
-      toUpdate: (info: any) => {
-        const updateInfo = () => {
-          doneUpdate(false);
-          console.log(info);
-        };
-        return (
-          <div className="cursor-pointer" onClick={updateInfo}>
-            <GoPencil />
-          </div>
-        );
+      toUpdate: () => {
+        console.log("To Update");
       },
     },
   ];
 
-  return (
-    <TableCustomerList
-      data={data}
-      config={config}
-      isToDelete={isToDelete}
-      isToUpdate={isToUpdate}
-    />
-  );
+  return <TableCustomerList data={data} config={config} />;
 }
 
 export default CustomerList;

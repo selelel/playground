@@ -6,6 +6,8 @@ export interface SuperbaseState {
   data: any;
   error: string | null;
   isLoading: boolean;
+  onDelete: boolean;
+  onUpdate: boolean;
 }
 
 export type Services = {

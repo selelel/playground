@@ -10,8 +10,17 @@ const customerInfo = createSlice({
     data: [],
     error: null,
     isLoading: false,
+    onDelete: false,
+    onUpdate: false,
   } as SuperbaseState,
-  reducers: {},
+  reducers: {
+    deleteInfo({ onDelete }, action) {
+      console.log(onDelete, action.payload);
+    },
+    updateInfo({ onUpdate }, action) {
+      console.log(onUpdate, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     //track user fetch
     builder.addCase(fetchInfo.pending, (state) => {
@@ -57,3 +66,4 @@ const customerInfo = createSlice({
 });
 
 export const customer_info = customerInfo.reducer;
+export const {deleteInfo, updateInfo} = customerInfo.actions

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { local_DB } from "./slices/ServicesSlice";
 import { customer_info } from "./slices/CustomerSlice";
+import { deleteInfo, updateInfo } from "./slices/CustomerSlice";
 
 const store = configureStore({
   reducer: {
@@ -9,4 +10,4 @@ const store = configureStore({
   },
 });
 
-export { store };
+export { store, deleteInfo, updateInfo };
