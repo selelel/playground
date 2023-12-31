@@ -1,18 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
-import { onAdding, onUpdate as Update, onDelete as Delete } from "../store";
+import {
+  onUpdate as Update,
+  onDelete as Delete,
+  onModalCustomer,
+} from "../store";
 import { interact } from "../types/slicesTypes";
 
 function Modify() {
   /*Whenever user click div child the modal closes and the buttons updated.*/
   const dispatch = useDispatch();
-
-  const { on_add, on_delete, on_update } = useSelector(
+  const { on_delete, on_update } = useSelector(
     (state: { interact: interact }) => state.interact
   );
 
   const onAdd = () => {
-    dispatch(onAdding(!on_add));
+    dispatch(onModalCustomer(true));
   };
   const onUpdate = () => {
     dispatch(Update(!on_update));

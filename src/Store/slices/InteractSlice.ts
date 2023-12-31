@@ -7,7 +7,9 @@ const Interact = createSlice({
     on_add: false,
     on_delete: false,
     on_update: false,
-    on_open: false,
+    on_open: {
+      modal_customer: false,
+    },
   } as Prop,
   reducers: {
     onAdding(state, action) {
@@ -22,12 +24,13 @@ const Interact = createSlice({
       state.on_update = action.payload;
       console.log(state.on_update);
     },
-    onOpen(state, action) {
-      state.on_open = action.payload;
-      console.log(state.on_open);
+    onModalCustomer(state, action) {
+      state.on_open.modal_customer = action.payload;
+      console.log(state.on_open.modal_customer);
     },
   },
 });
 
 export const interact = Interact.reducer;
-export const { onDelete, onUpdate, onOpen, onAdding } = Interact.actions;
+export const { onDelete, onUpdate, onModalCustomer, onAdding } =
+  Interact.actions;

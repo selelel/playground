@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch, useSelector } from "react-redux";
-import { customer_info } from "../types/slicesTypes";
+import { customer_info, interact } from "../types/slicesTypes";
 import { TfiReload } from "react-icons/tfi";
 import { FormEvent, useEffect, useState } from "react";
 import { fetchInfo } from "../store/thunks/CustomerPage/GET";
@@ -10,9 +10,9 @@ import FormCustomer from "../components/FormCustomer";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Modify from "../components/Modify";
+import { onModalCustomer } from "../store/slices/InteractSlice";
 
 function Customer() {
-  const [isOpen, setOpen] = useState(false);
   const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
   const [selected, setSelected] = useState("");
@@ -22,6 +22,10 @@ function Customer() {
   const { data, isLoading, error } = useSelector(
     (state: customer_info) => state.customer_info
   );
+
+  const {
+    on_open: { modal_customer },
+  } = useSelector((state: { interact: interact }) => state.interact);
 
   useEffect(() => {
     dispatch(fetchInfo() as any);
@@ -69,15 +73,15 @@ function Customer() {
   return (
     <div>
       <Modify />
-      {isOpen && (
+      {modal_customer && (
         <Modal
           onClose={() => {
-            setOpen(false);
+            dispatch(onModalCustomer(false));
           }}
           actionBar={
             <Button
               onClick={() => {
-                setOpen(false);
+                dispatch(onModalCustomer(false));
               }}
             >
               close
@@ -87,7 +91,7 @@ function Customer() {
           <p className="mb-3 text-3xl font-semibold">Customer</p>
           <FormCustomer
             onUpdate={() => {
-              setOpen(false);
+              dispatch(onModalCustomer(false));
             }}
           />
         </Modal>

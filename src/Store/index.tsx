@@ -5,7 +5,7 @@ import { deleteInfo, updateInfo } from "./slices/CustomerSlice";
 import {
   onAdding,
   onDelete,
-  onOpen,
+  onModalCustomer,
   onUpdate,
   interact,
 } from "./slices/InteractSlice";
@@ -18,4 +18,12 @@ const store = configureStore({
   },
 });
 
-export { store, deleteInfo, updateInfo, onDelete, onOpen, onUpdate, onAdding };
+export {
+  store,
+  deleteInfo,
+  updateInfo,
+  onDelete,
+  onModalCustomer,
+  onUpdate,
+  onAdding,
+};
