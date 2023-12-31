@@ -9,6 +9,7 @@ import Search from "../ui/Search";
 import FormCustomer from "../components/FormCustomer";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
+import Modify from "../components/Modify";
 
 function Customer() {
   const [isOpen, setOpen] = useState(false);
@@ -67,18 +68,7 @@ function Customer() {
 
   return (
     <div>
-      <div className="flex flex-col gap-2 justify-end">
-        <Button success onClick={() => setOpen(true)} className="w-fit">
-          Add
-        </Button>
-        <Button outline className="w-fit">
-          Update
-        </Button>
-        <Button danger className="w-fit">
-          Delete
-        </Button>
-      </div>
-
+      <Modify />
       {isOpen && (
         <Modal
           onClose={() => {

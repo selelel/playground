@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { customer_info } from "../store/slices/CustomerSlice";
+import { interact } from "../store/slices/InteractSlice";
 import { local_DB } from "../store/slices/ServicesSlice";
 
 export interface SuperbaseState {
@@ -25,6 +26,9 @@ export type local_DB = {
 export type customer_info = {
   customer_info: ReturnType<typeof customer_info>;
 };
+export interface interact extends Interact {
+  interact: ReturnType<typeof interact>;
+}
 
 export type add_info = {
   customer_name: string | undefined;
@@ -34,4 +38,11 @@ export type add_info = {
   vehicle_id: number | undefined;
   loyalty_sticker: boolean | undefined;
   customer_id: number | undefined;
+};
+
+export type Interact = {
+  on_add: boolean;
+  on_delete: boolean;
+  on_update: boolean;
+  on_open: boolean;
 };

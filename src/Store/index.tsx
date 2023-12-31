@@ -2,7 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { local_DB } from "./slices/ServicesSlice";
 import { customer_info } from "./slices/CustomerSlice";
 import { deleteInfo, updateInfo } from "./slices/CustomerSlice";
-import { onDelete, onOpen, onUpdate, interact } from "./slices/InteractSlice";
+import {
+  onAdding,
+  onDelete,
+  onOpen,
+  onUpdate,
+  interact,
+} from "./slices/InteractSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,4 +18,4 @@ const store = configureStore({
   },
 });
 
-export { store, deleteInfo, updateInfo, onDelete, onOpen, onUpdate };
+export { store, deleteInfo, updateInfo, onDelete, onOpen, onUpdate, onAdding };

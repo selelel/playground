@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TableCustomerList from "../ui/TableCustomerList";
 
-function CustomerList({ data, isToDelete, isToUpdate }: any) {
+function CustomerList({ data, isToDelete }: any) {
   const config = [
     {
       label: "ID",
