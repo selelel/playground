@@ -25,7 +25,7 @@ function Modify() {
   };
 
   return (
-    <div>
+    <div className="flex">
       <Button onClick={onAdd}>Add</Button>
       <Button onClick={onUpdate}>Update</Button>
       <Button onClick={onDelete}>Delete</Button>

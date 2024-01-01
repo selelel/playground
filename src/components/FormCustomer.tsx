@@ -52,7 +52,7 @@ function FormCustomer({ onUpdate }: prop) {
   const selectLoyalty = (e: any) => setLoyalty(e);
 
   return (
-    <form className="flex-col flex gap-2" onSubmit={submitInfo}>
+    <form className="flex-col flex gap-2 pb-4" onSubmit={submitInfo}>
       <Input ref={customerNameRef} type="text" label="Customer Name..." />
       <Input ref={addressRef} type="text" label="Address..." />
       <Input ref={contactPrimaryRef} type="number" label="Contact Primary..." />

@@ -3,6 +3,7 @@ import { SuperbaseState } from "../../types/slicesTypes";
 import { fetchInfo } from "../thunks/CustomerPage/GET";
 import { addUser } from "../thunks/CustomerPage/INSERT";
 import { removeInfo } from "../thunks/CustomerPage/DELETE";
+import { updateCustomer } from "../thunks/CustomerPage/UPDATE";
 
 const customerInfo = createSlice({
   name: "customer_info",
@@ -58,12 +59,36 @@ const customerInfo = createSlice({
           data.customer_id !== action.payload.customer_id
       );
     });
+
     builder.addCase(removeInfo.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message as string;
+    });
+
+    builder.addCase(updateCustomer.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateCustomer.fulfilled, (state, action) => {
+      state.isLoading = false;
+
+      const index = state.data.findIndex(
+        (element: { customer_id: number }) =>
+          element.customer_id === action.payload.customer_id
+      );
+
+      if (index !== -1) {
+        state.data[index] = {
+          ...state.data[index],
+          ...action.payload,
+        };
+      }
+    });
+    builder.addCase(updateCustomer.rejected, (state, action) => {
+      state.isLoading = false;
+      console.error(action.error.message);
     });
   },
 });
 
 export const customer_info = customerInfo.reducer;
-export const {deleteInfo, updateInfo} = customerInfo.actions
+export const { deleteInfo, updateInfo } = customerInfo.actions;

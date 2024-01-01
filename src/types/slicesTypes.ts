@@ -44,5 +44,8 @@ export type Interact = {
   on_add: boolean;
   on_delete: boolean;
   on_update: boolean;
-  on_open: { modal_customer: boolean };
+  on_open: { modal_customer: boolean; modal_update_customer: boolean };
+  prev_data: {
+    data: any;
+  };
 };

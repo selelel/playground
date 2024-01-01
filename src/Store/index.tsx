@@ -5,8 +5,10 @@ import { deleteInfo, updateInfo } from "./slices/CustomerSlice";
 import {
   onAdding,
   onDelete,
-  onModalCustomer,
   onUpdate,
+  updatePrev,
+  onModalCustomer,
+  onModalUpdateCustomer,
   interact,
 } from "./slices/InteractSlice";
 
@@ -25,5 +27,7 @@ export {
   onDelete,
   onModalCustomer,
   onUpdate,
+  updatePrev,
   onAdding,
+  onModalUpdateCustomer,
 };

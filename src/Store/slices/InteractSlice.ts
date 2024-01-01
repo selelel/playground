@@ -9,28 +9,42 @@ const Interact = createSlice({
     on_update: false,
     on_open: {
       modal_customer: false,
+      modal_update_customer: false,
+    },
+    prev_data: {
+      data: "",
     },
   } as Prop,
   reducers: {
     onAdding(state, action) {
       state.on_add = action.payload;
-      console.log(state.on_add);
     },
     onDelete(state, action) {
+      if (state.on_update) state.on_update = false;
       state.on_delete = action.payload;
-      console.log(state.on_delete);
     },
     onUpdate(state, action) {
+      if (state.on_delete) state.on_delete = false;
       state.on_update = action.payload;
-      console.log(state.on_update);
+    },
+    updatePrev(state, action) {
+      state.prev_data.data = action.payload;
     },
     onModalCustomer(state, action) {
       state.on_open.modal_customer = action.payload;
-      console.log(state.on_open.modal_customer);
+    },
+    onModalUpdateCustomer(state, action) {
+      state.on_open.modal_update_customer = action.payload;
     },
   },
 });
 
 export const interact = Interact.reducer;
-export const { onDelete, onUpdate, onModalCustomer, onAdding } =
-  Interact.actions;
+export const {
+  onAdding,
+  onDelete,
+  onUpdate,
+  updatePrev,
+  onModalCustomer,
+  onModalUpdateCustomer,
+} = Interact.actions;

@@ -1,7 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useDispatch } from "react-redux";
 import TableCustomerList from "../ui/TableCustomerList";
+import { FaPen, FaRegTrashAlt } from "react-icons/fa";
+import {
+  onDelete,
+  onModalUpdateCustomer,
+  onUpdate,
+  updatePrev,
+} from "../store";
+import { removeInfo } from "../store/thunks/CustomerPage/DELETE";
 
-function CustomerList({ data, isToDelete }: any) {
+function CustomerList({ data }: any) {
+  const dispatch = useDispatch();
   const config = [
     {
       label: "ID",
@@ -32,11 +42,28 @@ function CustomerList({ data, isToDelete }: any) {
       label: "Loyalty Sticker",
       render: (element: { loyalty_sticker: boolean }) =>
         element.loyalty_sticker?.toString().toUpperCase(),
-      toDelete: () => {
-        console.log(isToDelete);
+      toDelete: (element: number) => {
+        const onRemoveHandler = () => {
+          dispatch(removeInfo(element) as any);
+          dispatch(onDelete(true));
+        };
+        return (
+          <div onClick={onRemoveHandler}>
+            <FaRegTrashAlt className="text-red-500 cursor-pointer" />
+          </div>
+        );
       },
-      toUpdate: () => {
-        console.log("To Update");
+      toUpdate: (element: any) => {
+        const onUpdateHandler = () => {
+          dispatch(onUpdate(false));
+          dispatch(onModalUpdateCustomer(true));
+          dispatch(updatePrev(element));
+        };
+        return (
+          <div onClick={onUpdateHandler}>
+            <FaPen className="text-blue-500 cursor-pointer" />
+          </div>
+        );
       },
     },
   ];

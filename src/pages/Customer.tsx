@@ -10,7 +10,11 @@ import FormCustomer from "../components/FormCustomer";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Modify from "../components/Modify";
-import { onModalCustomer } from "../store/slices/InteractSlice";
+import {
+  onModalCustomer,
+  onModalUpdateCustomer,
+} from "../store/slices/InteractSlice";
+import UpdateCustomer from "../components/UpdateCustomer";
 
 function Customer() {
   const [searchItem, setSearchItem] = useState(undefined);
@@ -24,7 +28,7 @@ function Customer() {
   );
 
   const {
-    on_open: { modal_customer },
+    on_open: { modal_customer, modal_update_customer },
   } = useSelector((state: { interact: interact }) => state.interact);
 
   useEffect(() => {
@@ -72,7 +76,30 @@ function Customer() {
 
   return (
     <div>
-      <Modify />
+      {modal_update_customer && (
+        <Modal
+          onClose={() => {
+            dispatch(onModalUpdateCustomer(false));
+          }}
+          actionBar={
+            <Button
+              onClick={() => {
+                dispatch(onModalUpdateCustomer(false));
+              }}
+            >
+              close
+            </Button>
+          }
+        >
+          <p className="mb-3 text-3xl font-semibold">Customer</p>
+          <UpdateCustomer
+            onUpdate={() => {
+              dispatch(onModalUpdateCustomer(false));
+            }}
+          />
+        </Modal>
+      )}
+
       {modal_customer && (
         <Modal
           onClose={() => {
@@ -96,20 +123,19 @@ function Customer() {
           />
         </Modal>
       )}
-      <div>
-        <div>
-          <form onSubmit={submitSearch}>
-            <Search
-              onChange={searchHandle}
-              className="w-48"
-              itemOption={list}
-              onSelect={(e: any) => {
-                setSelected(e);
-              }}
-              value={selected}
-            />
-          </form>
-        </div>
+      <div className="flex items-center">
+        <form onSubmit={submitSearch}>
+          <Search
+            onChange={searchHandle}
+            className="w-48"
+            itemOption={list}
+            onSelect={(e: any) => {
+              setSelected(e);
+            }}
+            value={selected}
+          />
+        </form>
+        <Modify />
       </div>
 
       <div>{content}</div>
