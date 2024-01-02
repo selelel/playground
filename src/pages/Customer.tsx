@@ -15,13 +15,13 @@ import {
   onModalUpdateCustomer,
 } from "../store/slices/InteractSlice";
 import UpdateCustomer from "../components/UpdateCustomer";
+import ErrorHandling from "../ui/ErrorHandling";
 
 function Customer() {
+  const dispatch = useDispatch();
   const [searchItem, setSearchItem] = useState(undefined);
   const [list, setList] = useState(undefined);
   const [selected, setSelected] = useState("");
-
-  const dispatch = useDispatch();
 
   const { data, isLoading, error } = useSelector(
     (state: customer_info) => state.customer_info
@@ -69,7 +69,7 @@ function Customer() {
   const content = isLoading ? (
     <TfiReload className="animate-spin" />
   ) : error ? (
-    <>{error}</>
+    <ErrorHandling error={error} />
   ) : (
     <CustomerList data={searchItem || data} />
   );
